@@ -14,7 +14,7 @@ export default function Button({
 }: buttonProps) {
   return (
     <button
-      className={`${buttonStyles}  p-4 font-semibold text-white hover:text-unhighlighted my-3 rounded-lg capitalize  w-full`}
+      className={`${buttonStyles}  p-4 font-semibold my-3 rounded-lg capitalize w-[30rem] max-sm:w-full`}
       onClick={() => onclick}
       type={buttonType}
     >

@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "backend with the help of MERN for kaized",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "npm run dev"
+    "dev": "nodemon index.js"
   },
   "author": "aayush maharjan",
   "license": "ISC",

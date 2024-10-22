@@ -13,6 +13,7 @@ export default {
         primaryGreenLighter: "#A4B494",
         white: "#FFFFFF",
         unhighlighted: "#D8D4D5",
+        secondaryDark: "#1C1C1C",
       },
     },
   },
