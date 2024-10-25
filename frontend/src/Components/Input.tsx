@@ -1,10 +1,13 @@
+import { ChangeEvent } from "react";
+
 type InputProps = {
   inputTypes: "date" | "text" | "password" | "email";
   inputStyles?: string;
   placeholder: string;
-  onchange?: () => void;
+  onchange?: (e: ChangeEvent<HTMLInputElement>) => void;
   label?: string;
   id?: string;
+  value?: string;
 };
 export default function Input({
   inputTypes,
@@ -13,6 +16,7 @@ export default function Input({
   onchange,
   label,
   id,
+  value,
 }: InputProps) {
   return (
     <div>
@@ -23,6 +27,7 @@ export default function Input({
         onChange={onchange}
         placeholder={placeholder}
         id={id}
+        value={value}
       />
     </div>
   );

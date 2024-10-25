@@ -4,36 +4,36 @@ import Input from "../Components/Input";
 import axios from "axios";
 import { useAppContext } from "../contexts/AppContext";
 import { Link } from "react-router-dom";
-type loginData = {
+type signupData = {
+  name: string;
   email: string;
   password: string;
 };
-const initalData: loginData = {
+const initalData: signupData = {
+  name: "",
   email: "",
   password: "",
 };
-export default function Login() {
+export default function Signup() {
   const { showToast } = useAppContext();
-  const [data, setData] = useState<loginData>(initalData);
-  const updateData = (newData: Partial<loginData>) => {
+  const [data, setData] = useState<signupData>(initalData);
+  const updateData = (newData: Partial<signupData>) => {
     setData((prev) => {
       return { ...prev, ...newData };
     });
   };
-
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const response = await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/signup`,
+      `${import.meta.env.VITE_BACKEND_URL}/login`,
       data
     );
     console.log(response);
     if (!response) {
-      showToast({ message: "Error cant Signup", type: "error" });
+      showToast({ message: "Error ", type: "error" });
     }
-    showToast({ message: "Sucessfully  signed up", type: "sucess" });
+    showToast({ message: "Sucessfully  Logged In", type: "sucess" });
   }
-
   return (
     <div className="h-screen bg-primaryDark font-primaryFont flex justify-center items-center">
       <div className="p-4 ">
@@ -41,7 +41,7 @@ export default function Login() {
           Welcome to Kaizen
         </h1>
         <span className="block text-unhighlighted font-medium text-center mb-4 text-sm capitalize">
-          Login with your email
+          Register with your email
         </span>
 
         <form
@@ -49,6 +49,16 @@ export default function Login() {
             handleSubmit(e);
           }}
         >
+          <Input
+            inputTypes="text"
+            placeholder="Name"
+            inputStyles="text-center bg-secondaryDark hover:bg-white/10 transition-colors text-unhighlighted focus:outline focus:outline-primaryGreen"
+            aria-label="Name"
+            value={data.name}
+            onchange={(e: ChangeEvent<HTMLInputElement>) => {
+              updateData({ name: e.target.value });
+            }}
+          />
           <Input
             inputTypes="email"
             placeholder="Email"
@@ -73,12 +83,12 @@ export default function Login() {
             buttonStyles="flex justify-center items-center gap-4 bg-primaryGreen hover:bg-primaryGreenDarker text-white hover:text-unhighlighted transition-colors focus:outline focus:outline-primaryGreenDarker"
             buttonType="submit"
           >
-            Login
+            Register
           </Button>
         </form>
         <span>
-          Create an account?
-          <Link to="/signup" className=" ml-2 hover:text-primaryGreen">
+          Already have an account?
+          <Link to="/login" className="ml-2 hover:text-primaryGreen">
             Click Here
           </Link>
         </span>
