@@ -1,5 +1,5 @@
 type InputProps = {
-  inputTypes: "date" | "text" | "password";
+  inputTypes: "date" | "text" | "password" | "email";
   inputStyles?: string;
   placeholder: string;
   onchange?: () => void;
@@ -19,7 +19,7 @@ export default function Input({
       <label htmlFor={id}>{label}</label>
       <input
         type={inputTypes}
-        className={`${inputStyles} p-4 font-semibold  my-3 rounded-lg   w-full`}
+        className={`${inputStyles}  p-4 font-semibold  my-3 rounded-lg   w-full`}
         onChange={onchange}
         placeholder={placeholder}
         id={id}
