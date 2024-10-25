@@ -24,7 +24,14 @@ const signupController = async (req, res) => {
     if (!user) {
       return res.status(500).json({ message: "Error creating user" });
     }
-    return res.json({ message: "sucessfully created user", user: user });
+    const token = createJWTToken(user._id);
+    return res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: false,
+        expires: 24 * 60 * 60, // 1 day
+      })
+      .json({ message: "sucessfully created user", user: user });
   } catch (error) {
     return res.json("error occured in signup", error);
   }
