@@ -6,17 +6,18 @@ const postSchema = new mongoose.Schema(
       required: true,
     },
     createdBy: {
-      type: mongoose.Types.ObjectId(),
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
     },
-    contributionDate: [
-      {
-        type: Date,
-        required: true,
-      },
-    ],
+    date: {
+      type: String,
+    },
+    value: {
+      type: Number,
+      default: 0,
+    },
   },
+  //{{date:2020/10/10, value: 2},{date:2020/10/10, value: 2}}
   { timestamps: true }
 );
 const Post = mongoose.model("Post", postSchema);
