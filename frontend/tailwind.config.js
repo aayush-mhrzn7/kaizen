@@ -14,6 +14,7 @@ export default {
         white: "#FFFFFF",
         unhighlighted: "#D8D4D5",
         secondaryDark: "#1C1C1C",
+        primaryLightMode: "#EFEFEF",
       },
     },
   },

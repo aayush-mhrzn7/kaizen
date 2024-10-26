@@ -4,6 +4,7 @@ import Input from "../Components/Input";
 import axios from "axios";
 import { useAppContext } from "../contexts/AppContext";
 import { Link } from "react-router-dom";
+import Container from "../Components/Container";
 type loginData = {
   email: string;
   password: string;
@@ -35,12 +36,12 @@ export default function Login() {
   }
 
   return (
-    <div className="h-screen bg-primaryDark font-primaryFont flex justify-center items-center">
+    <Container containerStyle="flex bg-primaryLightMode  justify-center items-center">
       <div className="p-4 ">
-        <h1 className="text-3xl text-white m-5 text-center font-medium">
+        <h1 className="text-3xl text-primaryDark m-5 text-center font-medium">
           Welcome to Kaizen
         </h1>
-        <span className="block text-unhighlighted font-medium text-center mb-4 text-sm capitalize">
+        <span className="block text-primaryDark font-medium text-center mb-4 text-sm capitalize">
           Login with your email
         </span>
 
@@ -52,7 +53,7 @@ export default function Login() {
           <Input
             inputTypes="email"
             placeholder="Email"
-            inputStyles="text-center bg-secondaryDark hover:bg-white/10 transition-colors text-unhighlighted focus:outline focus:outline-primaryGreen"
+            inputStyles="text-center transition-colors text-primaryDark focus:outline focus:outline-primaryGreen"
             aria-label="Email"
             value={data.email}
             onchange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +63,7 @@ export default function Login() {
           <Input
             inputTypes="password"
             placeholder="Password"
-            inputStyles="text-center bg-secondaryDark hover:bg-white/10 transition-colors text-unhighlighted focus:outline focus:outline-primaryGreen"
+            inputStyles="text-center transition-colors text-primaryDark focus:outline focus:outline-primaryGreen"
             aria-label="Password"
             value={data.password}
             onchange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -76,13 +77,13 @@ export default function Login() {
             Login
           </Button>
         </form>
-        <span>
+        <span className="text-primaryDark">
           Create an account?
-          <Link to="/signup" className=" ml-2 hover:text-primaryGreen">
+          <Link to="/signup" className="  ml-2 hover:text-primaryGreen">
             Click Here
           </Link>
         </span>
       </div>
-    </div>
+    </Container>
   );
 }
