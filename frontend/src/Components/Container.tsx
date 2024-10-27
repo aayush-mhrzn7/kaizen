@@ -5,9 +5,7 @@ type containerProps = {
 };
 function Container({ children, containerStyle }: containerProps) {
   return (
-    <div
-      className={`h-screen font-primaryFont overflow-auto overflow-y-auto ${containerStyle}`}
-    >
+    <div className={`min-h-screen font-primaryFont  ${containerStyle}`}>
       {children}
     </div>
   );
