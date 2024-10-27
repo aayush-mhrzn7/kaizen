@@ -26,7 +26,7 @@ export default function Home() {
   }
   updateDateOnPost();
   return (
-    <Container containerStyle="bg-primaryLightMode flex  items-center flex-col  p-10 ">
+    <Container containerStyle="bg-primaryLightMode  flex-col  p-10 ">
       {showModal ? <Modal onclick={toggleModal} /> : null}
       <div
         className="bg-primaryGreen fixed bottom-4 right-4 cursor-pointer w-14 h-14 flex items-center justify-center rounded-full z-50"
