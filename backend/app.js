@@ -5,7 +5,7 @@ import cors from "cors";
 const app = express();
 app.use(
   cors({
-    origin: "*",
+    origin: "https://roaring-hotteok-114d66.netlify.app",
     credentials: true,
   })
 );
