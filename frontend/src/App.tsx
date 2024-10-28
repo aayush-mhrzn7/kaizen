@@ -16,7 +16,7 @@ export default function App() {
   useEffect(() => {
     (async () => {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/get-user`,
+        `https://kaizen-lqy2.onrender.com/api/get-user`,
         { withCredentials: true }
       );
       if (!res) {
