@@ -24,7 +24,7 @@ export default function Home() {
   }
   async function updateDateOnPost(postId: string) {
     const response = await axios.post(
-      `https://kaizen-lqy2.onrender.com/api/toggleContributionDate/${postId}`,
+      `${import.meta.env.VITE_BACKEND_URL}api/toggleContributionDate/${postId}`,
       { date },
       { withCredentials: true }
     );
@@ -37,7 +37,7 @@ export default function Home() {
   }
   const fetchData = async () => {
     const response = await axios.get(
-      `https://kaizen-lqy2.onrender.com/api/all-posts`,
+      `${import.meta.env.VITE_BACKEND_URL}/api/all-posts`,
       { withCredentials: true }
     );
     setPosts(response.data.posts);

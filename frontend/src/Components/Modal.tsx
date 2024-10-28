@@ -15,7 +15,7 @@ export default function Modal({ onclick, onPostCreated }: ModalProps) {
   const [input, setInput] = useState("");
   const createNewPost = async () => {
     const response = await axios.post(
-      `https://kaizen-lqy2.onrender.com/api/create`,
+      `${import.meta.env.VITE_BACKEND_URL}/api/create`,
       {
         postName: input,
       },

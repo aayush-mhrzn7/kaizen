@@ -31,7 +31,7 @@ export default function Signup() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const response = await axios.post(
-      `https://kaizen-lqy2.onrender.com/api/login`,
+      `${import.meta.env.VITE_BACKEND_URL}/api/signup`,
       data
     );
     console.log(response);

@@ -5,7 +5,7 @@ import cors from "cors";
 const app = express();
 app.use(
   cors({
-    origin: "https://roaring-hotteok-114d66.netlify.app",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
