@@ -7,8 +7,8 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("connection to the database is a sucess");
-    app.listen(port, () => {
-      console.log(`Server is running on port ${port}`);
+    app.listen(process.env.PORT, () => {
+      console.log(`Server is running on port ${process.env.PORT}`);
     });
   })
   .catch((err) => {
