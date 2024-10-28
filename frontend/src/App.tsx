@@ -12,7 +12,6 @@ import { RootState } from "./store/store";
 export default function App() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   useEffect(() => {
     (async () => {
       const res = await axios.get(
@@ -22,7 +21,6 @@ export default function App() {
       if (!res) {
         navigate("/login");
       }
-
       dispatch(login(res.data.user));
     })();
   });

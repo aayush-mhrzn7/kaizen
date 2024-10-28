@@ -5,6 +5,7 @@ import { RootState } from "../store/store";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const status = useSelector((state: RootState) => state.auth.status);
+
   return (
     <div className="h-screen bg-primaryLightMode overflow-hidden overflow-y-auto ">
       {status ? (

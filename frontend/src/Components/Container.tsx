@@ -5,9 +5,7 @@ type containerProps = {
 };
 function Container({ children, containerStyle }: containerProps) {
   return (
-    <div className={`min-h-screen font-primaryFont  ${containerStyle}`}>
-      {children}
-    </div>
+    <div className={` font-primaryFont  ${containerStyle}`}>{children}</div>
   );
 }
 

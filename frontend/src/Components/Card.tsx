@@ -23,9 +23,8 @@ export default function Card({
   pannelColors,
   isChecked,
 }: CardProps) {
-  console.log(isChecked);
   return (
-    <div className="bg-white p-4 rounded-lg z-0">
+    <div className="bg-white p-4 rounded-lg cursor-pointer z-0">
       <div className="flex justify-between m-2">
         <h4 className="text-primaryGreen text-lg capitalize font-bold">
           {title}

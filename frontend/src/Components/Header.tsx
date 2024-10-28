@@ -1,28 +1,31 @@
 import axios from "axios";
-// import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { RootState } from "../store/store";
+import { logout } from "../store/AuthSlice";
 
 export default function Header() {
-  const status = true;
-  //   const userStatus = useSelector((state) => state.auth.status);
-
+  const dispatch = useDispatch();
+  const userStatus = useSelector((state: RootState) => state.auth.status);
+  const navigate = useNavigate();
   const handleLogout = async () => {
     const res = await axios.delete(
-      `${import.meta.env.VITE_BACKEND_URL}/logout`,
+      `${import.meta.env.VITE_BACKEND_URL}/api/logout`,
       { withCredentials: true }
     );
-    console.log(res);
+    dispatch(logout(res.data));
+    navigate("/login");
   };
   const navLinks = [
     {
       name: "Login",
       slug: "/login",
-      active: !status,
+      active: !userStatus,
     },
     {
       name: "Signup",
       slug: "/signup",
-      active: !status,
+      active: !userStatus,
     },
   ];
 

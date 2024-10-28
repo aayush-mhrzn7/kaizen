@@ -3,7 +3,7 @@ import Button from "../Components/Button";
 import Input from "../Components/Input";
 import axios from "axios";
 import { useAppContext } from "../contexts/AppContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "../Components/Container";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 type signupData = {
@@ -17,6 +17,7 @@ const initalData: signupData = {
   password: "",
 };
 export default function Signup() {
+  const navigate = useNavigate();
   const [showEye, setShowEye] = useState(false);
   const { showToast } = useAppContext();
   const [data, setData] = useState<signupData>(initalData);
@@ -30,18 +31,39 @@ export default function Signup() {
   };
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const response = await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/api/signup`,
-      data
-    );
-    console.log(response);
-    if (!response) {
-      showToast({ message: "Error ", type: "error" });
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/signup`,
+        data,
+        { withCredentials: true }
+      );
+
+      if (response.status === 200) {
+        showToast({ message: response.data.message, type: "sucess" });
+        navigate("/");
+      } else {
+        showToast({ message: response.data.message, type: "error" });
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          showToast({
+            message: error.response.data.message || "An error occurred",
+            type: "error",
+          });
+        } else {
+          showToast({
+            message: "Network error. Please try again later.",
+            type: "error",
+          });
+        }
+      } else {
+        showToast({ message: "An unexpected error occurred.", type: "error" });
+      }
     }
-    showToast({ message: "Sucessfully  Logged In", type: "sucess" });
   }
   return (
-    <Container containerStyle=" flex bg-primaryLightMode  justify-center items-center">
+    <Container containerStyle="h-screen flex bg-primaryLightMode  justify-center items-center">
       <div className="p-4 ">
         <h1 className="text-3xl text-primaryDark m-5 text-center font-medium">
           Welcome to Kaizen

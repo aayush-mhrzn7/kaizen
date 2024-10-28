@@ -29,11 +29,12 @@ const signupController = async (req, res) => {
       .cookie("token", token, {
         httpOnly: true,
         secure: false,
-        expires: 24 * 60 * 60, // 1 day
+        maxAge: 30 * 24 * 60 * 60 * 1000,
       })
+      .status(200)
       .json({ message: "sucessfully created user", user: user });
   } catch (error) {
-    return res.json("error occured in signup", error);
+    return res.status(400).json("error occured in signup", error);
   }
 };
 //user login controller
@@ -50,7 +51,7 @@ const loginController = async (req, res) => {
     const doesPasswordMatch = comparePassword(password, user.password);
     if (!doesPasswordMatch) {
       return res
-        .status(400)
+        .status(300)
         .json({ message: "Invalid credentials Passwords dont match" });
     }
     const JWTToken = createJWTToken(user._id);
@@ -58,11 +59,12 @@ const loginController = async (req, res) => {
       .cookie("token", JWTToken, {
         httpOnly: false,
         secure: false,
+        maxAge: 30 * 24 * 60 * 60 * 1000,
       })
       .status(200)
       .json({ message: "sucessfully logged in", user: user });
   } catch (error) {
-    return res.json("error occured in login", error);
+    return res.status(400).json("error occured in login", error);
   }
 };
 const getUserController = async (req, res) => {
@@ -71,12 +73,12 @@ const getUserController = async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: "User not found" });
     }
-    return res.json({
+    return res.status(200).json({
       message: "sucessfully fetched user Details",
       user: user,
     });
   } catch (error) {
-    return res.json("error occured in fetching user", error);
+    return res.status(400).json("error occured in fetching user", error);
   }
 };
 const logoutControllers = async (req, res) => {

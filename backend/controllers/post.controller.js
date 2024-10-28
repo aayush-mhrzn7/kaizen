@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Post from "../database/post.model.js";
 
 const createPost = async (req, res) => {
@@ -82,7 +83,13 @@ const toggleContributionDate = async (req, res) => {
 };
 const allPosts = async (req, res) => {
   try {
-    const posts = await Post.find({});
+    const posts = await Post.aggregate([
+      {
+        $match: {
+          createdBy: new mongoose.Types.ObjectId(req.user.id),
+        },
+      },
+    ]);
     if (!posts) {
       return res.status(404).json({ message: "No posts found" });
     }

@@ -24,11 +24,13 @@ export default function Home() {
   }
   async function updateDateOnPost(postId: string) {
     const response = await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}api/toggleContributionDate/${postId}`,
+      `${
+        import.meta.env.VITE_BACKEND_URL
+      }/api/toggleContributionDate/${postId}`,
       { date },
       { withCredentials: true }
     );
-    console.log(response.data);
+
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
         post._id === postId ? { ...post, date: response.data.post.date } : post
@@ -45,7 +47,7 @@ export default function Home() {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(posts);
+
   return (
     <Container containerStyle="bg-primaryLightMode  flex-col  p-10 ">
       {showModal ? (
