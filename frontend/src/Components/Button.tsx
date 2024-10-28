@@ -15,7 +15,7 @@ export default function Button({
   return (
     <button
       className={`${buttonStyles}  p-4 font-semibold my-3 rounded-lg capitalize w-[30rem] max-sm:w-full`}
-      onClick={() => onclick}
+      onClick={onclick}
       type={buttonType}
     >
       {children}

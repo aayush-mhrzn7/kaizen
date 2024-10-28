@@ -1,9 +1,18 @@
-import { useSelector } from "react-redux";
+import axios from "axios";
+// import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Header() {
   const status = true;
   //   const userStatus = useSelector((state) => state.auth.status);
+
+  const handleLogout = async () => {
+    const res = await axios.delete(
+      `${import.meta.env.VITE_BACKEND_URL}/logout`,
+      { withCredentials: true }
+    );
+    console.log(res);
+  };
   const navLinks = [
     {
       name: "Login",
@@ -14,11 +23,6 @@ export default function Header() {
       name: "Signup",
       slug: "/signup",
       active: !status,
-    },
-    {
-      name: "Logout",
-      slug: "/logout",
-      active: status,
     },
   ];
 
@@ -38,6 +42,9 @@ export default function Header() {
               </Link>
             ) : null
           )}
+          <button type="button" className="font-medium" onClick={handleLogout}>
+            Logout
+          </button>
         </nav>
       </div>
     </div>
