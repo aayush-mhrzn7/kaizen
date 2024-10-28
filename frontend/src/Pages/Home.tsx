@@ -24,7 +24,9 @@ export default function Home() {
   }
   async function updateDateOnPost(postId: string) {
     const response = await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/toggleContributionDate/${postId}`,
+      `${
+        import.meta.env.VITE_BACKEND_URL
+      }/api/toggleContributionDate/${postId}`,
       { date },
       { withCredentials: true }
     );
@@ -37,7 +39,7 @@ export default function Home() {
   }
   const fetchData = async () => {
     const response = await axios.get(
-      `${import.meta.env.VITE_BACKEND_URL}/all-posts`,
+      `${import.meta.env.VITE_BACKEND_URL}/api/all-posts`,
       { withCredentials: true }
     );
     setPosts(response.data.posts);
