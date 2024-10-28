@@ -41,35 +41,46 @@ const deletePost = async (req, res) => {
   }
 };
 const toggleContributionDate = async (req, res) => {
-  const { postId } = req.params;
-  const { date } = req.body;
-  if (!postId) {
-    return res.status(400).json({ message: "Post Id is required" });
-  }
-  const post = await Post.findById(postId);
   try {
+    const { postId } = req.params;
+    const { date } = req.body;
+
+    if (!postId) {
+      return res.status(400).json({ message: "Post ID is required" });
+    }
+
+    const post = await Post.findById(postId);
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
-    if (!post.date) {
-      post.date = date;
-      post.value = 2;
-      await post.save();
-      return res.status(200).json({
-        message: "Post date has been successfully toggled",
-        post,
-      });
+
+    post.date = post.date || {};
+    if (post.date[date]) {
+      // If date exists, remove it
+      const { [date]: _, ...remainingDates } = post.date;
+      post.date = remainingDates;
     } else {
-      post.date = null;
-      post.value = 0;
-      await post.save();
-      return res.status(200).json({
-        message: "Post date has been successfully toggled",
-        post,
-      });
+      // If date doesn't exist, add it with value 2
+      post.date = {
+        ...post.date,
+        [date]: 2,
+      };
     }
+
+    // Update value based on whether any dates exist
+    post.value = Object.keys(post.date).length > 0 ? 2 : 0;
+
+    await post.save();
+    return res.status(200).json({
+      message: "Post date has been successfully toggled",
+      post,
+    });
   } catch (error) {
-    return res.status(400).json({ message: "Error toggling post date" });
+    console.error("Error in toggleContributionDate:", error);
+    return res.status(500).json({
+      message: "Error toggling post date",
+      error: error.message,
+    });
   }
 };
 const allPosts = async (req, res) => {
