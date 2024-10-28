@@ -3,9 +3,8 @@ import Post from "../database/post.model.js";
 const createPost = async (req, res) => {
   try {
     const { postName } = req.body;
-    const createdBy = req.user._id;
-    console.log(postName);
-    console.log(createdBy);
+    const createdBy = req.user.id;
+
     if (!postName) {
       return res.status(400).json({ message: "All fields are required" });
     }
@@ -19,7 +18,7 @@ const createPost = async (req, res) => {
       return res.status(400).json({ message: "Error creating post" });
     }
     return res
-      .status(400)
+      .status(200)
       .json({ message: "Post created successfully", post: post });
   } catch (error) {
     console.log(error);
@@ -56,11 +55,9 @@ const toggleContributionDate = async (req, res) => {
 
     post.date = post.date || {};
     if (post.date[date]) {
-      // If date exists, remove it
       const { [date]: _, ...remainingDates } = post.date;
       post.date = remainingDates;
     } else {
-      // If date doesn't exist, add it with value 2
       post.date = {
         ...post.date,
         [date]: 2,
@@ -73,7 +70,7 @@ const toggleContributionDate = async (req, res) => {
     await post.save();
     return res.status(200).json({
       message: "Post date has been successfully toggled",
-      post,
+      post: post,
     });
   } catch (error) {
     console.error("Error in toggleContributionDate:", error);

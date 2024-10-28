@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { FiX } from "react-icons/fi";
 
 type toastProps = {
   message: string;
@@ -18,12 +19,11 @@ function Toast({ message, type, onClose }: toastProps) {
     <div
       className={`${
         type == "sucess"
-          ? `z-50 fixed top-3 right-6 bg-primaryGreen hover:bg-primaryGreenDarker`
-          : "z-50 fixed top-3 right-6 bg-red-500 hover:bg-red-900"
-      } p-4 mx-10 font-semibold font-primaryFont`}
-      onClick={onClose}
+          ? `z-50 fixed bottom-5 left-2 bg-primaryGreen hover:bg-primaryGreenDarker transition-colors `
+          : "z-50 fixed bottom-5 left-2 bg-red-500 hover:bg-red-900"
+      } p-4 flex justify-center  items-center gap-4 mx-10 font-semibold font-primaryFont text-white rounded-md`}
     >
-      {message}
+      <FiX className="font-extrabold " onClick={onClose} /> {message}
     </div>
   );
 }

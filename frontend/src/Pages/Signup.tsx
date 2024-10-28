@@ -5,6 +5,7 @@ import axios from "axios";
 import { useAppContext } from "../contexts/AppContext";
 import { Link } from "react-router-dom";
 import Container from "../Components/Container";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 type signupData = {
   name: string;
   email: string;
@@ -16,8 +17,12 @@ const initalData: signupData = {
   password: "",
 };
 export default function Signup() {
+  const [showEye, setShowEye] = useState(false);
   const { showToast } = useAppContext();
   const [data, setData] = useState<signupData>(initalData);
+  const toggleEye = () => {
+    setShowEye(!showEye);
+  };
   const updateData = (newData: Partial<signupData>) => {
     setData((prev) => {
       return { ...prev, ...newData };
@@ -52,7 +57,7 @@ export default function Signup() {
         >
           <Input
             inputTypes="text"
-            placeholder="Name"
+            placeholder="Full Name"
             inputStyles="text-center transition-colors text-primaryDark focus:outline focus:outline-primaryGreen"
             aria-label="Name"
             value={data.name}
@@ -70,16 +75,30 @@ export default function Signup() {
               updateData({ email: e.target.value });
             }}
           />
-          <Input
-            inputTypes="password"
-            placeholder="Password"
-            inputStyles="text-center transition-colors text-primaryDark focus:outline focus:outline-primaryGreen"
-            aria-label="Password"
-            value={data.password}
-            onchange={(e: ChangeEvent<HTMLInputElement>) => {
-              updateData({ password: e.target.value });
-            }}
-          />
+          <div className="relative">
+            <Input
+              inputTypes={showEye ? "text" : "password"}
+              placeholder="Password"
+              inputStyles="text-center font-normal  transition-colors text-primaryDark focus:outline focus:outline-primaryGreen"
+              aria-label="Password"
+              value={data.password}
+              onchange={(e: ChangeEvent<HTMLInputElement>) => {
+                updateData({ password: e.target.value });
+              }}
+            />
+            <FiEyeOff
+              onClick={toggleEye}
+              className={`${
+                showEye ? `hidden` : ``
+              }  absolute top-[40%] right-4  text-primaryGreen`}
+            />
+            <FiEye
+              onClick={toggleEye}
+              className={` ${
+                showEye ? `` : `hidden`
+              } absolute top-[40%] right-4 text-primaryGreen`}
+            />
+          </div>
           <Button
             buttonStyles="flex justify-center items-center gap-4 bg-primaryGreen hover:bg-primaryGreenDarker text-white hover:text-unhighlighted transition-colors focus:outline focus:outline-primaryGreenDarker"
             buttonType="submit"

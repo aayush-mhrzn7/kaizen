@@ -1,33 +1,56 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import Card from "../Components/Card";
 import Container from "../Components/Container";
 import Modal from "../Components/Modal";
-var until = "2016-06-30";
-var values = {
-  "2016-06-23": 1,
-  "2016-06-26": 2,
-  "2016-06-27": 3,
-  "2016-06-28": 4,
-  "2016-04-29": 1,
+import axios from "axios";
+import empty from "../assets/empty.png";
+type PostType = {
+  _id: string;
+  postName: string;
+  date?: string;
 };
-// Panel colors: inactive = 1, active = 2
 var panelColors = ["#eeeeee", "#F4998D", "#519872"];
 export default function Home() {
+  const dat = new Date();
+  const unforamtedDate = dat.toISOString();
+  const date = unforamtedDate.split("T")[0];
+  var until = dat.toLocaleDateString();
   const [showTooltip, setShowTooltip] = useState(false);
   const [showModal, setshowModal] = useState(false);
+  const [posts, setPosts] = useState<PostType[]>([]);
   function toggleModal() {
     setshowModal(!showModal);
   }
-  async function updateDateOnPost() {
-    const date = new Date();
-    console.log(date.toLocaleDateString());
-    //axios ma pos
+  async function updateDateOnPost(postId: string) {
+    const response = await axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/toggleContributionDate/${postId}`,
+      { date },
+      { withCredentials: true }
+    );
+    console.log(response.data);
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post._id === postId ? { ...post, date: response.data.post.date } : post
+      )
+    );
   }
-  updateDateOnPost();
+  const fetchData = async () => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_BACKEND_URL}/all-posts`,
+      { withCredentials: true }
+    );
+    setPosts(response.data.posts);
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+  console.log(posts);
   return (
     <Container containerStyle="bg-primaryLightMode  flex-col  p-10 ">
-      {showModal ? <Modal onclick={toggleModal} /> : null}
+      {showModal ? (
+        <Modal onclick={toggleModal} onPostCreated={() => fetchData()} />
+      ) : null}
       <div
         className="bg-primaryGreen fixed bottom-4 right-4 cursor-pointer w-14 h-14 flex items-center justify-center rounded-full z-50"
         onMouseEnter={() => setShowTooltip(true)}
@@ -41,43 +64,28 @@ export default function Home() {
           </span>
         )}
       </div>
-      <div className="grid gap-6 grid-cols-2 max-sm:grid-cols-1 z-10">
-        <Card
-          title="Workout"
-          onClick={updateDateOnPost}
-          values={values}
-          pannelColors={panelColors}
-          until={until}
-        />
-        <Card
-          title="Read Books"
-          onClick={updateDateOnPost}
-          values={values}
-          pannelColors={panelColors}
-          until={until}
-        />
-        <Card
-          title="Drink 5L water"
-          onClick={updateDateOnPost}
-          values={values}
-          pannelColors={panelColors}
-          until={until}
-        />
-        <Card
-          title="Cardio"
-          onClick={updateDateOnPost}
-          values={values}
-          pannelColors={panelColors}
-          until={until}
-        />
-        <Card
-          title="Dance"
-          onClick={updateDateOnPost}
-          values={values}
-          pannelColors={panelColors}
-          until={until}
-        />
-      </div>
+      {posts.length == 0 ? (
+        <div className="flex justify-center items-center mt-48 flex-col">
+          <h4 className="font-medium text-2xl max-md:text-xl text-primaryGreen">
+            No Habits being tracked
+          </h4>
+          <img src={empty} alt="" width={300} />
+        </div>
+      ) : (
+        <div className="grid gap-6 grid-cols-2 max-sm:grid-cols-1 z-10">
+          {posts.map((post, index) => (
+            <Card
+              key={index}
+              title={post.postName}
+              onClick={() => updateDateOnPost(post._id)}
+              values={post.date ? post.date : {}}
+              pannelColors={panelColors}
+              until={until}
+              isChecked={post.date ? post.date.hasOwnProperty(date) : false} // Check if today's date exists as a key
+            />
+          ))}
+        </div>
+      )}
     </Container>
   );
 }

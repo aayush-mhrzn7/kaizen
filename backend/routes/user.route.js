@@ -9,7 +9,7 @@ import { verifyJWT } from "../middleware/VerifyJWt.js";
 const router = Router();
 router.route("/signup").post(signupController);
 router.route("/login").post(loginController);
-router.route("/logout").get(logoutControllers);
+router.route("/logout").delete(logoutControllers);
 router.route("/get-user").get(verifyJWT, getUserController);
 
 export default router;

@@ -38,36 +38,35 @@ const signupController = async (req, res) => {
 };
 //user login controller
 const loginController = async (req, res) => {
-  /* try { */
-  const { email, password } = req.body;
-  if ([email, password].some((field) => field.trim() == "")) {
-    return res.status(400).json({ message: "All fields are required" });
-  }
-  const user = await User.findOne({ email });
-  if (!user) {
-    return res.status(400).json({ message: "User doesnt exist" });
-  }
-  const doesPasswordMatch = comparePassword(password, user.password);
-  if (!doesPasswordMatch) {
+  try {
+    const { email, password } = req.body;
+    if ([email, password].some((field) => field.trim() == "")) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "User doesnt exist" });
+    }
+    const doesPasswordMatch = comparePassword(password, user.password);
+    if (!doesPasswordMatch) {
+      return res
+        .status(400)
+        .json({ message: "Invalid credentials Passwords dont match" });
+    }
+    const JWTToken = createJWTToken(user._id);
     return res
-      .status(400)
-      .json({ message: "Invalid credentials Passwords dont match" });
-  }
-  const JWTToken = createJWTToken(user._id);
-  return res
-    .cookie("token", JWTToken, {
-      httpOnly: true,
-      secure: false,
-    })
-    .status(200)
-    .json({ message: "sucessfully logged in", user: user });
-  /* } catch (error) {
+      .cookie("token", JWTToken, {
+        httpOnly: false,
+        secure: false,
+      })
+      .status(200)
+      .json({ message: "sucessfully logged in", user: user });
+  } catch (error) {
     return res.json("error occured in login", error);
-  } */
+  }
 };
 const getUserController = async (req, res) => {
   try {
-    console.log(req.user);
     const user = await User.findById(req.user?.id);
     if (!user) {
       return res.status(400).json({ message: "User not found" });
@@ -82,10 +81,12 @@ const getUserController = async (req, res) => {
 };
 const logoutControllers = async (req, res) => {
   try {
-    req.logout();
-    return res.clearCookie("token").json({ message: "sucessfully logged out" });
+    return res
+      .clearCookie("token")
+      .status(200)
+      .json({ message: "sucessfully logged out" });
   } catch (error) {
-    return res.json("error occured in logout", error);
+    return res.status(400).json("error occured in logout");
   }
 };
 export {
