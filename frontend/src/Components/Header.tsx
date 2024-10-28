@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Header() {
-  const status = false;
+  const status = true;
   //   const userStatus = useSelector((state) => state.auth.status);
   const navLinks = [
     {

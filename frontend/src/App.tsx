@@ -12,7 +12,7 @@ export default function App() {
         <Route
           path="/"
           element={
-            <Layout status={status}>
+            <Layout status={true}>
               <Home />
             </Layout>
           }

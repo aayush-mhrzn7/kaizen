@@ -10,7 +10,9 @@ const postSchema = new mongoose.Schema(
       ref: "User",
     },
     date: {
-      type: String,
+      type: Object,
+
+      default: {},
     },
     value: {
       type: Number,
