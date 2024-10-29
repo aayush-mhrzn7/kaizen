@@ -100,4 +100,21 @@ const allPosts = async (req, res) => {
     return res.status(400).json({ message: "Error fetching posts" });
   }
 };
-export { createPost, deletePost, toggleContributionDate, allPosts };
+const getPost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    if (!postId) {
+      return res.status(400).json({ message: "Post Id is required" });
+    }
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(400).json({ message: "Post not found" });
+    }
+    return res
+      .status(200)
+      .json({ message: "Post fetched successfully", post: post });
+  } catch (error) {
+    return res.status(400).json({ message: "Error fetching post" });
+  }
+};
+export { createPost, deletePost, toggleContributionDate, allPosts, getPost };
