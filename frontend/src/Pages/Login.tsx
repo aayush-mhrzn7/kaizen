@@ -29,12 +29,12 @@ export default function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/login`,
+        `${import.meta.env.VITE_BACKEND_URL}/login`,
         data,
         { withCredentials: true }
       );
 
-      if (response.status === 200) {
+      if (response.status) {
         showToast({ message: response.data.message, type: "sucess" });
         navigate("/");
       } else {

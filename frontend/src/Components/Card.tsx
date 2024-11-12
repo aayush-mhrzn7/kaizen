@@ -31,7 +31,7 @@ export default function Card({
 }: CardProps) {
   const [maximizeTooltip, setmaximizeTooltip] = useState(false);
   return (
-    <div className="bg-white p-4 rounded-lg cursor-pointer z-0">
+    <div className="bg-white p-4 rounded-lg cursor-pointer z-0 shadow-md">
       <div className="flex justify-between m-2">
         <h4 className="text-primaryGreen text-lg capitalize font-bold">
           {title}
@@ -46,7 +46,7 @@ export default function Card({
               onMouseLeave={() => setmaximizeTooltip(false)}
             />
             {maximizeTooltip && (
-              <span className="absolute bottom-4 right-16 bg-gray-800 text-white text-sm py-1 px-3 rounded shadow-lg">
+              <span className="absolute bottom-4 right-16 bg-primaryGreen text-white text-sm py-1 px-3 rounded shadow-lg">
                 Maximize
               </span>
             )}

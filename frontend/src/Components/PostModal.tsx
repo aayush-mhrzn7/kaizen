@@ -20,7 +20,7 @@ export default function PostModal({
 
   const deletePost = async () => {
     const res = await axios.delete(
-      `${import.meta.env.VITE_BACKEND_URL}/api/delete/${post.postId}`,
+      `${import.meta.env.VITE_BACKEND_URL}/delete/${post.postId}`,
       { withCredentials: true }
     );
     onPostDeleted(post.postId);
@@ -31,9 +31,11 @@ export default function PostModal({
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="absolute inset-0 bg-black opacity-50"></div>
-      <div className="relative bg-white w-full max-w-lg p-4 rounded-lg shadow-lg z-10">
+      <div className="relative mx-10 bg-white w-full max-w-lg p-4 rounded-lg shadow-lg z-10">
         <span className="flex justify-between items-center">
-          <h4 className="text-primaryGreen font-bold text-xl">{post.title}</h4>
+          <h4 className="text-primaryGreen capitalize font-bold text-xl">
+            {post.title}
+          </h4>
           <FiX onClick={onclick} className="cursor-pointer" />
         </span>
         <div className="grid grid-cols-3 mt-5 gap-4 items-center">

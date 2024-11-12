@@ -10,7 +10,7 @@ export default function Header() {
   const navigate = useNavigate();
   const handleLogout = async () => {
     const res = await axios.delete(
-      `${import.meta.env.VITE_BACKEND_URL}/api/logout`,
+      `${import.meta.env.VITE_BACKEND_URL}/logout`,
       { withCredentials: true }
     );
     dispatch(logout(res.data));

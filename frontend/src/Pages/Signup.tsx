@@ -33,7 +33,7 @@ export default function Signup() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/signup`,
+        `${import.meta.env.VITE_BACKEND_URL}/signup`,
         data,
         { withCredentials: true }
       );

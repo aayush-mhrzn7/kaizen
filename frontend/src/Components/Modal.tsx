@@ -15,7 +15,7 @@ export default function Modal({ onclick, onPostCreated }: ModalProps) {
   const [input, setInput] = useState("");
   const createNewPost = async () => {
     const response = await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/api/create`,
+      `${import.meta.env.VITE_BACKEND_URL}/create`,
       {
         postName: input,
       },
@@ -33,7 +33,7 @@ export default function Modal({ onclick, onPostCreated }: ModalProps) {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="absolute inset-0 bg-black opacity-50"></div>
-      <div className="relative bg-white  w-full max-w-lg p-4  rounded-lg shadow-lg z-10">
+      <div className="relative mx-10 bg-white  w-full max-w-lg p-4  rounded-lg shadow-lg z-10">
         <span className="flex justify-between items-center">
           <h4 className="text-primaryGreen font-bold text-xl">
             New Habit Tracker
