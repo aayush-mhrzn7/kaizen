@@ -26,12 +26,7 @@ const signupController = async (req, res) => {
     }
     const token = createJWTToken(user._id);
     return res
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "None",
-        maxAge: 30 * 24 * 60 * 60 * 1000,
-      })
+      .cookie("token", token)
       .status(200)
       .json({ message: "sucessfully created user", user: user });
   } catch (error) {
@@ -57,12 +52,7 @@ const loginController = async (req, res) => {
     }
     const JWTToken = createJWTToken(user._id);
     return res
-      .cookie("token", JWTToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "None",
-        maxAge: 30 * 24 * 60 * 60 * 1000,
-      })
+      .cookie("token", JWTToken)
       .status(200)
       .json({ message: "sucessfully logged in", user: user });
   } catch (error) {
