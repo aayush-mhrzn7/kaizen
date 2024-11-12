@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Calendar from "react-github-contribution-calendar";
-import { FiMaximize, FiMoreVertical } from "react-icons/fi";
+import { FiMaximize } from "react-icons/fi";
 
 type CardProps = {
   title: string;
