@@ -27,8 +27,6 @@ const signupController = async (req, res) => {
     const token = createJWTToken(user._id);
     return res
       .cookie("token", token, {
-        httpOnly: true,
-        secure: true,
         maxAge: 30 * 24 * 60 * 60 * 1000,
       })
       .status(200)
@@ -57,8 +55,6 @@ const loginController = async (req, res) => {
     const JWTToken = createJWTToken(user._id);
     return res
       .cookie("token", JWTToken, {
-        httpOnly: true,
-        secure: true,
         maxAge: 30 * 24 * 60 * 60 * 1000,
       })
       .status(200)
