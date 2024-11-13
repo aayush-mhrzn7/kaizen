@@ -27,8 +27,8 @@ const signupController = async (req, res) => {
     return res
       .cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        secure: true,
+        sameSite: "None",
       })
       .status(200)
       .json({ message: "Successfully created user", user: user });
@@ -58,8 +58,8 @@ const loginController = async (req, res) => {
     return res
       .cookie("token", JWTToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        secure: true,
+        sameSite: "None",
       })
       .status(200)
       .json({ message: "Successfully logged in", user: user });
