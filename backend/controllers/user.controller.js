@@ -7,7 +7,6 @@ const createJWTToken = (userID) => {
     expiresIn: "1d",
   });
 };
-//user signup controller
 const signupController = async (req, res) => {
   try {
     const { email, password, name } = req.body;
@@ -26,14 +25,19 @@ const signupController = async (req, res) => {
     }
     const token = createJWTToken(user._id);
     return res
-      .cookie("token", token)
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      })
       .status(200)
-      .json({ message: "sucessfully created user", user: user });
+      .json({ message: "Successfully created user", user: user });
   } catch (error) {
-    return res.status(400).json("error occured in signup", error);
+    return res.status(400).json("Error occurred in signup", error);
   }
 };
-//user login controller
+
+// User login controller
 const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -42,21 +46,25 @@ const loginController = async (req, res) => {
     }
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: "User doesnt exist" });
+      return res.status(400).json({ message: "User doesn't exist" });
     }
     const doesPasswordMatch = comparePassword(password, user.password);
     if (!doesPasswordMatch) {
       return res
         .status(300)
-        .json({ message: "Invalid credentials Passwords dont match" });
+        .json({ message: "Invalid credentials. Passwords don't match" });
     }
     const JWTToken = createJWTToken(user._id);
     return res
-      .cookie("token", JWTToken)
+      .cookie("token", JWTToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      })
       .status(200)
-      .json({ message: "sucessfully logged in", user: user });
+      .json({ message: "Successfully logged in", user: user });
   } catch (error) {
-    return res.status(400).json("error occured in login", error);
+    return res.status(400).json("Error occurred in login", error);
   }
 };
 const getUserController = async (req, res) => {
