@@ -5,7 +5,7 @@ import cors from "cors";
 const app = express();
 app.use(
   cors({
-    origin: "https://kaizen-seven.vercel.app "
+    origin: "https://kaizen-seven.vercel.app ",
     credentials: true,
   })
 );
