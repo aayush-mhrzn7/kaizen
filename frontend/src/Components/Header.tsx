@@ -9,10 +9,9 @@ export default function Header() {
   const userStatus = useSelector((state: RootState) => state.auth.status);
   const navigate = useNavigate();
   const handleLogout = async () => {
-    const res = await axios.delete(
-      `${import.meta.env.VITE_BACKEND_URL}/logout`,
-      { withCredentials: true }
-    );
+    await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/logout`, {
+      withCredentials: true,
+    });
     dispatch(logout(null));
     navigate("/login");
   };
