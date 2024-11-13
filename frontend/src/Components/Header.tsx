@@ -13,7 +13,7 @@ export default function Header() {
       `${import.meta.env.VITE_BACKEND_URL}/logout`,
       { withCredentials: true }
     );
-    dispatch(logout(res.data));
+    dispatch(logout);
     navigate("/login");
   };
   const navLinks = [
